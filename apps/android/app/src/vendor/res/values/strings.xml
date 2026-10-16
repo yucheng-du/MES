@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="printer_disconnected">Printer not connected</string>
+    <string name="printer_lost">Printer disconnected. Check whether the label printed before retrying.</string>
+    <string name="printer_connection_closed">Printer connection closed</string>
+    <string name="cover_open">Printer cover is open</string>
+    <string name="no_paper">Printer is out of paper. Load paper and retry.</string>
+    <string name="firmware_error">Printer firmware error. Use the vendor tools to resolve it.</string>
+    <string name="sdk_init_failed">Printer SDK initialization failed</string>
+    <string name="printer_busy">Printer is busy. Please wait.</string>
+    <string name="printer_connecting">Connecting to %1$s…</string>
+    <string name="connection_timeout_wait">Connection timed out; waiting for the driver to stop. Check the printer.</string>
+    <string name="connection_timeout">Connection timed out. Check the printer and retry.</string>
+    <string name="unsupported_printer">This printer model is not supported by the JC driver</string>
+    <string name="connection_failed">Connection failed (%1$d). Check the printer and system pairing.</string>
+    <string name="connection_ended">Connection ended. You can reconnect.</string>
+    <string name="cannot_connect">Unable to connect printer: %1$s</string>
+    <string name="connect_printer_first">Connect a printer first</string>
+    <string name="previous_print_pending">The previous label is still printing. Please wait.</string>
+    <string name="printing_label">Printing %1$s…</string>
+    <string name="print_unconfirmed_end">Label sent, but the driver did not confirm the job end. Check the label before retrying.</string>
+    <string name="print_unconfirmed">Print result unconfirmed. Check the label before retrying.</string>
+    <string name="print_complete">Print complete · %1$s</string>
+    <string name="print_timeout">Print confirmation timed out. Check the physical label; it will not be reprinted automatically.</string>
+    <string name="print_failed">Printing failed (%1$d). Check the printer and supplies.</string>
+    <string name="print_failed_state">Printing failed (%1$d / %2$d). Check the label before retrying.</string>
+    <string name="print_cancelled_check">Printing cancelled. Check the physical label.</string>
+    <string name="label_transfer_failed">Label transfer failed: %1$s</string>
+    <string name="cannot_print">Unable to print: %1$s</string>
+    <string name="operation_not_finished">The current operation has not finished. Please wait.</string>
+    <string name="driver_arch_error">The driver does not support this device architecture or memory page size. Ask your administrator to update the vendor SDK.</string>
+    <string name="driver_permission_error">Bluetooth permission denied. Allow Nearby devices in system settings.</string>
+    <string name="driver_error">Printer driver error</string>
+    <string name="printer_attention">Printer needs attention. Check the last print result.</string>
+    <string name="label_quantity">Qty: %1$d</string>
+</resources>

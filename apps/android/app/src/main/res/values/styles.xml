@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.MesNext" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">#12665B</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+</resources>

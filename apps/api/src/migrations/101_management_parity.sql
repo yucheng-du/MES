@@ -1,0 +1,16 @@
+ALTER TABLE records ADD COLUMN stage text;
+ALTER TABLE records ADD COLUMN workflow_data jsonb NOT NULL DEFAULT '{}';
+CREATE TABLE management_events(id uuid PRIMARY KEY,record_id uuid NOT NULL REFERENCES records(id) ON DELETE CASCADE,kind text NOT NULL,data jsonb NOT NULL DEFAULT '{}',actor_id uuid NOT NULL REFERENCES users(id),created_at timestamptz NOT NULL DEFAULT now());
+CREATE INDEX management_events_record ON management_events(record_id,created_at,id);
+CREATE TABLE checklist_execution_items(id uuid PRIMARY KEY,record_id uuid NOT NULL REFERENCES records(id) ON DELETE CASCADE,sequence integer NOT NULL,title text NOT NULL,content text NOT NULL,source_id uuid,source_attachments jsonb NOT NULL DEFAULT '[]',result text,attachment_ids jsonb NOT NULL DEFAULT '[]',completed_by uuid REFERENCES users(id),completed_at timestamptz,UNIQUE(record_id,sequence));
+CREATE TABLE purchase_payments(id uuid PRIMARY KEY,purchase_id uuid NOT NULL REFERENCES records(id),status text NOT NULL CHECK(status IN ('requested','approved','rejected','paid')),amount numeric(18,2) NOT NULL CHECK(amount>0),method text NOT NULL,payee text NOT NULL,account text NOT NULL,bank text NOT NULL DEFAULT '',notes text NOT NULL DEFAULT '',attachment_ids jsonb NOT NULL DEFAULT '[]',requested_by uuid NOT NULL REFERENCES users(id),reviewed_by uuid REFERENCES users(id),paid_by uuid REFERENCES users(id),created_at timestamptz NOT NULL DEFAULT now(),reviewed_at timestamptz,paid_at timestamptz);
+CREATE UNIQUE INDEX purchase_one_open_payment ON purchase_payments(purchase_id) WHERE status IN ('requested','approved');
+CREATE TABLE safety_learning(record_id uuid NOT NULL REFERENCES records(id),user_id uuid NOT NULL REFERENCES users(id),learned_at timestamptz NOT NULL DEFAULT now(),PRIMARY KEY(record_id,user_id));
+ALTER TABLE payroll DROP CONSTRAINT payroll_source_type_check;
+ALTER TABLE payroll ADD CONSTRAINT payroll_source_type_check CHECK(source_type IN ('piece','hours','reward','penalty','scrap-penalty','scrap-reward','quality-reward','manual-adjustment','piece-adjustment'));
+CREATE UNIQUE INDEX mold_one_mounted_per_device ON records((data->>'mountedDeviceId')) WHERE resource='molds' AND data->>'lifecycle'='mounted';
+ALTER TABLE material_movements DROP CONSTRAINT material_movements_source_id_key;
+ALTER TABLE material_movements ADD COLUMN reverses_id uuid UNIQUE REFERENCES material_movements(id);
+CREATE UNIQUE INDEX material_movements_original_source ON material_movements(source_id) WHERE reverses_id IS NULL;
+CREATE TABLE andon_notifications(id uuid PRIMARY KEY,record_id uuid NOT NULL REFERENCES records(id),payload jsonb NOT NULL,status text NOT NULL DEFAULT 'scheduled' CHECK(status IN ('scheduled','pending','sent','failed','cancelled')),due_at timestamptz NOT NULL DEFAULT now(),attempts integer NOT NULL DEFAULT 0,last_error text,created_at timestamptz NOT NULL DEFAULT now(),delivered_at timestamptz);
+CREATE INDEX andon_notifications_pending ON andon_notifications(created_at) WHERE status='pending';

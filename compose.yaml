@@ -1,0 +1,73 @@
+name: mes-next
+services:
+  db:
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mes
+      POSTGRES_DB: mes
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.production}
+    volumes:
+      - database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mes -d mes"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  api:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+      target: api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://mes:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}@db:5432/mes
+      APP_ORIGIN: https://${MES_DOMAIN:?Set MES_DOMAIN}
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 4300
+      TRUST_PROXY: "true"
+      FILE_STORAGE_DIR: /var/lib/mes/uploads
+      FACTORY_TIMEZONE: ${FACTORY_TIMEZONE:-Asia/Shanghai}
+      ANDON_WEBHOOK_URL: ${ANDON_WEBHOOK_URL:-}
+      ANDON_WEBHOOK_TOKEN: ${ANDON_WEBHOOK_TOKEN:-}
+      SMS_GATEWAY_URL: ${SMS_GATEWAY_URL:-}
+      SMS_GATEWAY_TOKEN: ${SMS_GATEWAY_TOKEN:-}
+      MQTT_URL: ${MQTT_URL:-}
+      MQTT_USERNAME: ${MQTT_USERNAME:-}
+      MQTT_PASSWORD: ${MQTT_PASSWORD:-}
+      MQTT_TOPIC: ${MQTT_TOPIC:-device/send/+}
+      ALLOW_PRIVATE_MQTT: ${ALLOW_PRIVATE_MQTT:-false}
+    command: ["sh", "-c", "npm run db:migrate -w @mes/api && npm run start -w @mes/api"]
+    volumes:
+      - uploads:/var/lib/mes/uploads
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4300/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+  web:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+      target: web
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      MES_DOMAIN: ${MES_DOMAIN:?Set MES_DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  database:
+  caddy_data:
+  caddy_config:
+  uploads:

@@ -1,0 +1,11 @@
+# Machine configuration, caches and builds
+.local/
+.gradle/
+local.properties
+**/build/
+*.jks
+*.keystore
+
+# Optional proprietary SDKs are supplied locally by authorized users.
+app/libs/*.aar
+app/libs/*.jar

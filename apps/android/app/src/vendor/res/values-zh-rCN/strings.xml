@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="printer_disconnected">打印机未连接</string>
+    <string name="printer_lost">打印机连接中断；请核对标签是否已经打印后再重试</string>
+    <string name="printer_connection_closed">打印机连接已断开</string>
+    <string name="cover_open">打印机上盖已打开</string>
+    <string name="no_paper">打印机缺纸，请装纸后重试</string>
+    <string name="firmware_error">打印机固件异常，请通过厂商工具处理</string>
+    <string name="sdk_init_failed">打印 SDK 初始化失败</string>
+    <string name="printer_busy">打印机正在执行操作，请稍候</string>
+    <string name="printer_connecting">正在连接 %1$s…</string>
+    <string name="connection_timeout_wait">连接超时，正在等待驱动退出；请检查打印机</string>
+    <string name="connection_timeout">连接超时，请检查打印机后重试</string>
+    <string name="unsupported_printer">此打印机型号不受精臣驱动支持</string>
+    <string name="connection_failed">连接失败（%1$d），请检查打印机及系统配对</string>
+    <string name="connection_ended">连接已结束，可重新连接</string>
+    <string name="cannot_connect">无法连接打印机：%1$s</string>
+    <string name="connect_printer_first">请先连接打印机</string>
+    <string name="previous_print_pending">上一张标签仍在打印，请稍候</string>
+    <string name="printing_label">正在打印 %1$s…</string>
+    <string name="print_unconfirmed_end">标签已送出，但驱动未确认任务结束；请核实后再打印</string>
+    <string name="print_unconfirmed">打印结果未确认，请核对标签后再试</string>
+    <string name="print_complete">打印完成 · %1$s</string>
+    <string name="print_timeout">打印结果超时未确认，请核对实物标签；不会自动重印</string>
+    <string name="print_failed">打印失败（%1$d），请检查打印机和耗材</string>
+    <string name="print_failed_state">打印失败（%1$d / %2$d），请核对实物后重试</string>
+    <string name="print_cancelled_check">打印已取消，请核对实物标签</string>
+    <string name="label_transfer_failed">标签传输失败：%1$s</string>
+    <string name="cannot_print">无法打印：%1$s</string>
+    <string name="operation_not_finished">当前操作尚未结束，请稍候</string>
+    <string name="driver_arch_error">驱动不支持当前设备架构或系统内存页，请联系管理员更新厂商 SDK</string>
+    <string name="driver_permission_error">蓝牙权限未授予，请在系统设置中允许“附近设备”</string>
+    <string name="driver_error">驱动异常</string>
+    <string name="printer_attention">打印机需要处理，请核对上次打印结果</string>
+    <string name="label_quantity">数量：%1$d</string>
+</resources>

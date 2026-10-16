@@ -1,0 +1,46 @@
+{
+  "name": "mes",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/api",
+    "apps/web",
+    "packages/shared"
+  ],
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env scripts/dev.mjs",
+    "build": "npm run build -w @mes/web && npm run build -w @mes/api",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "node --env-file-if-exists=.env node_modules/tsx/dist/cli.mjs --test --test-concurrency=1 apps/api/test/*.test.ts",
+    "db:migrate": "node --env-file-if-exists=.env node_modules/tsx/dist/cli.mjs apps/api/src/migrate.ts",
+    "db:seed": "node --env-file-if-exists=.env node_modules/tsx/dist/cli.mjs apps/api/src/seed.ts",
+    "start": "node --env-file-if-exists=.env node_modules/tsx/dist/cli.mjs apps/api/src/server.ts",
+    "db:local": "node scripts/local-db.mjs",
+    "db:stop": "node scripts/local-db.mjs stop",
+    "test:e2e": "playwright test",
+    "test:web": "node node_modules/tsx/dist/cli.mjs --test apps/web/src/*.test.ts",
+    "test:integrations": "node --env-file-if-exists=.env node_modules/tsx/dist/cli.mjs --test tests/*.node.ts",
+    "check:public": "node scripts/check-public-files.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^22.18.0",
+    "concurrently": "^9.2.1",
+    "prettier": "^3.9.10",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "description": "Bilingual manufacturing execution system for small factories",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yucheng-du/MES.git"
+  },
+  "dependencies": {
+    "pdfjs-dist": "6.4.299"
+  }
+}

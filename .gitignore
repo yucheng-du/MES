@@ -1,0 +1,33 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.local/
+backups/
+coverage/
+test-results/
+playwright-report/
+apps/android/.gradle/
+apps/android/**/build/
+apps/android/local.properties
+*.jks
+*.keystore
+.DS_Store
+*.log
+*.dump
+*.sqlite
+*.sqlite3
+*.pem
+*.key
+*.p12
+*.apk
+*.aab
+.idea/
+.vscode/
+# Local handoff and historical validation contain workstation/session details.
+docs/IMPLEMENTATION.md
+docs/VALIDATION.md
+# Proprietary printer SDKs are supplied locally for the optional vendor flavor.
+apps/android/app/libs/*.aar
+apps/android/app/libs/*.jar

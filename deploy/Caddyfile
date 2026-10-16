@@ -1,0 +1,21 @@
+{$MES_DOMAIN} {
+  encode zstd gzip
+  header {
+    X-Content-Type-Options nosniff
+    Referrer-Policy strict-origin-when-cross-origin
+    X-Frame-Options DENY
+    Content-Security-Policy "frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'"
+    Permissions-Policy "camera=(self), microphone=(), geolocation=()"
+    Strict-Transport-Security "max-age=31536000"
+  }
+  handle /api/* {
+    reverse_proxy api:4300 {
+      flush_interval -1
+    }
+  }
+  handle {
+    root * /srv
+    try_files {path} /index.html
+    file_server
+  }
+}

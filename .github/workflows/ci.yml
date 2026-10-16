@@ -1,0 +1,79 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  web-api:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:17-bookworm
+        env:
+          POSTGRES_USER: mes
+          POSTGRES_PASSWORD: ci_only_password
+          POSTGRES_DB: mes_ci
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U mes -d mes_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgres://mes:ci_only_password@127.0.0.1:5432/mes_ci
+      TEST_DATABASE_URL: postgres://mes:ci_only_password@127.0.0.1:5432/mes_ci_test
+      EQUIPMENT_TEST_DATABASE_URL: postgres://mes:ci_only_password@127.0.0.1:5432/mes_ci_equipment_parity_test
+      APP_ORIGIN: http://localhost:5173,http://127.0.0.1:5173
+      HOST: 127.0.0.1
+      PORT: 4300
+      FACTORY_TIMEZONE: Asia/Shanghai
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check:public
+      - run: npm run typecheck && npm run build && npm run test:web
+      - name: Create isolated test database
+        run: |
+          PGPASSWORD=ci_only_password createdb -h 127.0.0.1 -U mes mes_ci_test
+          PGPASSWORD=ci_only_password createdb -h 127.0.0.1 -U mes mes_ci_equipment_parity_test
+      - run: npm test && npm run test:integrations
+      - run: npm run db:migrate && npm run db:seed
+      - run: npx playwright install --with-deps chromium
+      - name: Start development server
+        run: |
+          mkdir -p .local
+          npm run dev > .local/ci-server.log 2>&1 &
+          node --input-type=module <<'NODE'
+          for (let attempt = 0; attempt < 60; attempt++) {
+            try {
+              const health = await fetch('http://127.0.0.1:5173/api/health');
+              if (health.ok) process.exit(0);
+            } catch {}
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+          process.exit(1);
+          NODE
+      - run: npm run test:e2e
+  android-community:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Set up Android SDK and required components
+        uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
+        with:
+          cmdline-tools-version: "12266719" # 16.0; compatible with JDK 17
+          packages: "platform-tools platforms;android-35 build-tools;35.0.0"
+          log-accepted-android-sdk-licenses: false
+      - name: Build and check the community app without vendor binaries
+        working-directory: apps/android
+        run: ./scripts/build-debug.sh community

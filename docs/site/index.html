@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="面向小工厂的开源制造执行系统。连接订单、车间作业、质量、库存与工资。">
+  <meta name="theme-color" content="#173f35">
+  <title>MES · 制造执行系统</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">跳到主要内容</a>
+  <header class="site-header">
+    <a class="wordmark" href="#home" aria-label="MES">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span>MES</span>
+    </a>
+    <nav aria-label="主导航" data-i18n-aria="nav.label">
+      <a href="#demo" data-i18n="nav.demo">演示</a>
+      <a href="#capabilities" data-i18n="nav.features">功能</a>
+      <a href="#start" data-i18n="nav.docs">文档</a>
+      <a class="source-link" href="https://github.com/yucheng-du/MES">GitHub <span aria-hidden="true">↗</span></a>
+      <button id="language" class="language-button" type="button" aria-label="Switch to English" hidden>English</button>
+      <noscript><a href="https://github.com/yucheng-du/MES#english">English</a></noscript>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="home" class="hero" aria-labelledby="hero-heading">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span><span data-i18n="eyebrow">开源 · 制造执行系统</span></p>
+      <h1 id="hero-heading"><span data-i18n="heading.first">从订单到交付，</span><span data-i18n="heading.second">看清生产每一步。</span></h1>
+      <p class="intro" data-i18n="intro">面向小工厂的开源 MES。把订单、车间作业、质量、库存与工资，放到同一个工作空间。</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#start"><span data-i18n="start">开始使用</span><span aria-hidden="true">↗</span></a>
+        <a class="button button-secondary" href="#demo"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg><span data-i18n="watch">观看演示</span></a>
+      </div>
+    </section>
+
+    <figure id="demo" class="product-preview">
+      <div class="video-shell">
+        <div class="preview-heading"><span class="preview-brand">MES <span aria-hidden="true">/</span> <span data-i18n="preview.title">产品演示</span></span></div>
+        <video id="demo-video" controls playsinline preload="metadata" poster="assets/demo-poster.png" width="1440" height="900" aria-label="MES 产品演示" data-i18n-aria="preview.label">
+          <source src="assets/Demo.mp4" type="video/mp4">
+          <a href="assets/Demo.mp4" data-i18n="preview.fallback">下载演示视频</a>
+        </video>
+      </div>
+    </figure>
+
+    <section id="capabilities" class="section capabilities" aria-labelledby="features-heading">
+      <div class="section-heading"><div><p class="eyebrow" data-i18n="features.tag">围绕工厂日常</p><h2 id="features-heading" data-i18n="features.title">让每项工作，都有着落。</h2></div><a class="text-link" id="features-guide" href="https://github.com/yucheng-du/MES/blob/main/docs/FEATURES.zh-CN.md"><span data-i18n="features.link">查看完整功能</span><span aria-hidden="true">↗</span></a></div>
+      <div class="feature-grid">
+        <article><svg class="feature-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="7" y="5" width="19" height="24" rx="3"/><path d="M12 3h9v5h-9zM12 14h9m-9 6h9m-9 5h5"/></svg><h3 data-i18n="production.title">生产执行</h3><p data-i18n="production.body">从产品工艺、订单与工单，到任务分派和车间报工。</p></article>
+        <article><svg class="feature-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="m16 3 11 5v8c0 6-5 10-11 13C10 26 5 22 5 16V8l11-5Z"/><path d="m11 16 4 4 7-8"/></svg><h3 data-i18n="quality.title">质量与审核</h3><p data-i18n="quality.body">检验、报废处理与报工审核，保留每一步的记录。</p></article>
+        <article><svg class="feature-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="m4 9 12-6 12 6v14l-12 6-12-6V9Zm0 0 12 6 12-6M16 15v14M10 6l12 6"/></svg><h3 data-i18n="inventory.title">库存与采购</h3><p data-i18n="inventory.body">成品和物料出入库、采购申请，以及分次付款。</p></article>
+        <article><svg class="feature-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="4" y="5" width="24" height="18" rx="3"/><path d="M11 29h10m-5-6v6M8 16h4l3-6 4 9 3-5h2"/></svg><h3 data-i18n="equipment.title">设备与现场</h3><p data-i18n="equipment.body">设备运行统计、点检保养与安灯，让现场问题有迹可循。</p></article>
+        <article><svg class="feature-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="12" cy="10" r="5"/><path d="M3 28v-3a9 9 0 0 1 18 0v3M23 6a5 5 0 0 1 0 9m2 5a7 7 0 0 1 4 7"/></svg><h3 data-i18n="people.title">人员与工资</h3><p data-i18n="people.body">人员档案、分级权限、工作任务，以及计件与计时工资。</p></article>
+        <article><svg class="feature-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="8" y="2" width="16" height="28" rx="3"/><path d="M13 6h6m-5 20h4M12 13v-2h3m5 2v-2h-2m-6 7v2h3m5-2v2h-2"/></svg><h3 data-i18n="mobile.title">Android 移动端</h3><p data-i18n="mobile.body">在现场扫码、查看图纸、上传文件，并接入可选标签打印。</p></article>
+      </div>
+    </section>
+
+    <section id="start" class="section start" aria-labelledby="start-heading">
+      <div class="start-copy"><p class="eyebrow" data-i18n="start.tag">从这里开始</p><h2 id="start-heading"><span data-i18n="start.first">在你的环境，</span><span data-i18n="start.second">运行你的 MES。</span></h2><p data-i18n="start.body">先运行本地演示，再按部署文档配置自己的服务。源码和文档都在 GitHub。</p><a class="source-action" href="https://github.com/yucheng-du/MES"><span data-i18n="source">浏览源码</span><span aria-hidden="true">↗</span></a></div>
+      <div class="guide-links">
+        <a id="guide" href="https://github.com/yucheng-du/MES#快速启动"><span><strong data-i18n="guide.title">本地快速启动</strong><span data-i18n="guide.body">安装依赖，启动服务，试用演示数据。</span></span><span class="guide-arrow" aria-hidden="true">↗</span></a>
+        <a id="deployment-guide" href="https://github.com/yucheng-du/MES/blob/main/docs/DEPLOYMENT.zh-CN.md"><span><strong data-i18n="deploy.title">部署与备份</strong><span data-i18n="deploy.body">配置、上线与日常维护的完整说明。</span></span><span class="guide-arrow" aria-hidden="true">↗</span></a>
+        <a id="android-guide" href="https://github.com/yucheng-du/MES/blob/main/apps/android/README.zh-CN.md"><span><strong data-i18n="android.title">Android 使用指南</strong><span data-i18n="android.body">构建客户端，连接自己的 MES 服务。</span></span><span class="guide-arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="wordmark" href="#home" aria-label="MES"><span>MES</span></a>
+    <nav aria-label="项目链接" data-i18n-aria="footer.label"><a href="https://github.com/yucheng-du/MES/blob/main/LICENSE">MIT</a><a href="https://github.com/yucheng-du/MES/blob/main/CONTRIBUTING.md" data-i18n="footer.contribute">参与贡献</a><a href="https://github.com/yucheng-du/MES/blob/main/SECURITY.md" data-i18n="footer.security">安全反馈</a><a href="https://github.com/yucheng-du/MES/blob/main/docs/MEDIA-CREDITS.md" data-i18n="footer.credits">媒体来源</a></nav>
+  </footer>
+</body>
+</html>
